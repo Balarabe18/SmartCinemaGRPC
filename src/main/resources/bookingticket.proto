@@ -11,7 +11,7 @@ service MovieBookingService {
 
 message BookingRequest {
     string moviename = 1;
-    int32 seatnumber = 2;
+    int32 seatId = 2;
     string starttime = 3;
 }
 
