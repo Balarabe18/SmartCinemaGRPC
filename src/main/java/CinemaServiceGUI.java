@@ -1,172 +1,160 @@
-import java.awt.EventQueue;
-import java.awt.GridLayout;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import bookingticket.BookingTicketProto;
+import bookingticket.MovieBookingServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+
+import foodanddrinksservice.FoodAndDrinksServiceProto.*;
+import foodanddrinksservice.FoodAndDrinksServiceGrpc;
+
 import cinemaservice.CinemaServiceGrpc;
-import cinemaservice.CinemaServiceProto.*;
+import cinemaservice.CinemaServiceProto;
 
 public class CinemaServiceGUI extends JFrame {
+    private ManagedChannel bookingChannel;
+    private ManagedChannel cinemaChannel;
+    private ManagedChannel foodAndDrinksChannel;
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField movieNameField, startTimeField, durationField, scheduleIdField, updateTimeField, cinemaIdField;
-    private JTextArea responseArea;
-    private ManagedChannel channel;
-    private CinemaServiceGrpc.CinemaServiceBlockingStub blockingStub;
-    private CinemaServiceGrpc.CinemaServiceStub asyncStub;
+    private MovieBookingServiceGrpc.MovieBookingServiceBlockingStub bookingBlockingStub;
+    private MovieBookingServiceGrpc.MovieBookingServiceStub bookingAsyncStub;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    CinemaServiceGUI frame = new CinemaServiceGUI();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+    private CinemaServiceGrpc.CinemaServiceBlockingStub cinemaBlockingStub;
+    private CinemaServiceGrpc.CinemaServiceStub cinemaAsyncStub;
 
-    /**
-     * Create the frame.
-     */
+    private FoodAndDrinksServiceGrpc.FoodAndDrinksServiceBlockingStub foodAndDrinksBlockingStub;
+    private FoodAndDrinksServiceGrpc.FoodAndDrinksServiceStub foodAndDrinksAsyncStub;
+
     public CinemaServiceGUI() {
-        setTitle("Cinema Service Client");
+        initServices();
+        initComponents();
+    }
+
+    private void initServices() {
+        bookingChannel = ManagedChannelBuilder.forAddress("localhost", 50051).usePlaintext().build();
+        bookingBlockingStub = MovieBookingServiceGrpc.newBlockingStub(bookingChannel);
+        bookingAsyncStub = MovieBookingServiceGrpc.newStub(bookingChannel);
+
+        cinemaChannel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
+        cinemaBlockingStub = CinemaServiceGrpc.newBlockingStub(cinemaChannel);
+        cinemaAsyncStub = CinemaServiceGrpc.newStub(cinemaChannel);
+
+        foodAndDrinksChannel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+        foodAndDrinksBlockingStub = FoodAndDrinksServiceGrpc.newBlockingStub(foodAndDrinksChannel);
+        foodAndDrinksAsyncStub = FoodAndDrinksServiceGrpc.newStub(foodAndDrinksChannel);
+    }
+
+    private void initComponents() {
+        setTitle("Cinema Service GUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 600, 400);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(new GridLayout(10, 2, 10, 10));
+        setSize(800, 600);
 
-        add(new JLabel("Movie Name:"));
-        movieNameField = new JTextField();
-        add(movieNameField);
+        JTabbedPane tabbedPane = new JTabbedPane();
 
-        add(new JLabel("Start Time (YYYY-MM-DDTHH:MM:SS):"));
-        startTimeField = new JTextField();
-        add(startTimeField);
+        // Booking Ticket Tab
+        JPanel bookingPanel = new JPanel();
+        bookingPanel.setLayout(new GridLayout(3, 2));
+        bookingPanel.add(new JLabel("Seat ID:"));
+        JTextField seatIdField = new JTextField();
+        bookingPanel.add(seatIdField);
+        bookingPanel.add(new JLabel("Movie ID:"));
+        JTextField movieIdField = new JTextField();
+        bookingPanel.add(movieIdField);
+        JButton bookTicketButton = new JButton("Book Ticket");
+        bookingPanel.add(bookTicketButton);
+        JTextArea bookingResponseArea = new JTextArea();
+        bookingPanel.add(new JScrollPane(bookingResponseArea));
 
-        add(new JLabel("Duration (minutes):"));
-        durationField = new JTextField();
-        add(durationField);
-
-        JButton scheduleButton = new JButton("Schedule Movie");
-        scheduleButton.addActionListener(new ActionListener() {
+        bookTicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                scheduleMovie();
+                String seatId = seatIdField.getText();
+                String movieId = movieIdField.getText();
+                BookingTicketProto.BookingRequest request = BookingTicketProto.BookingRequest.newBuilder()
+                        .setSeatId(seatId)
+                        .setMovieId(movieId)
+                        .build();
+                BookingTicketProto.BookingResponse response = bookingBlockingStub.bookingTicket(request);
+                bookingResponseArea.setText(response.getMessage());
             }
         });
-        add(scheduleButton);
 
-        add(new JLabel("Schedule ID:"));
-        scheduleIdField = new JTextField();
-        add(scheduleIdField);
+        // Cinema Service Tab
+        JPanel cinemaPanel = new JPanel();
+        cinemaPanel.setLayout(new GridLayout(3, 2));
+        cinemaPanel.add(new JLabel("Customer ID:"));
+        JTextField customerIdField = new JTextField();
+        cinemaPanel.add(customerIdField);
+        cinemaPanel.add(new JLabel("Ticket ID:"));
+        JTextField ticketIdField = new JTextField();
+        cinemaPanel.add(ticketIdField);
+        JButton checkCinemaButton = new JButton("Check Cinema");
+        cinemaPanel.add(checkCinemaButton);
+        JTextArea cinemaResponseArea = new JTextArea();
+        cinemaPanel.add(new JScrollPane(cinemaResponseArea));
 
-        add(new JLabel("Update Time (YYYY-MM-DDTHH:MM:SS):"));
-        updateTimeField = new JTextField();
-        add(updateTimeField);
-
-        JButton updateButton = new JButton("Update Schedule");
-        updateButton.addActionListener(new ActionListener() {
+        checkCinemaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateSchedule();
+                String customerId = customerIdField.getText();
+                String ticketId = ticketIdField.getText();
+                CinemaServiceProto.CheckCinemaRequest request = CinemaServiceProto.CheckCinemaRequest.newBuilder()
+                        .setCustomerId(customerId)
+                        .setTicketId(ticketId)
+                        .build();
+                CinemaServiceProto.CheckCinemaResponse response = cinemaBlockingStub.checkCinema(request);
+                cinemaResponseArea.setText(response.getMessage());
             }
         });
-        add(updateButton);
 
-        add(new JLabel("Cinema ID:"));
-        cinemaIdField = new JTextField();
-        add(cinemaIdField);
+        // Food and Drinks Service Tab
+        JPanel foodAndDrinksPanel = new JPanel();
+        foodAndDrinksPanel.setLayout(new GridLayout(3, 2));
+        foodAndDrinksPanel.add(new JLabel("Seat ID:"));
+        JTextField foodSeatIdField = new JTextField();
+        foodAndDrinksPanel.add(foodSeatIdField);
+        foodAndDrinksPanel.add(new JLabel("Order:"));
+        JTextField orderField = new JTextField();
+        foodAndDrinksPanel.add(orderField);
+        JButton placeOrderButton = new JButton("Place Order");
+        foodAndDrinksPanel.add(placeOrderButton);
+        JTextArea foodAndDrinksResponseArea = new JTextArea();
+        foodAndDrinksPanel.add(new JScrollPane(foodAndDrinksResponseArea));
 
-        JButton streamButton = new JButton("Stream Cinema Status");
-        streamButton.addActionListener(new ActionListener() {
+        placeOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                streamCinemaStatus();
+                String seatId = foodSeatIdField.getText();
+                String order = orderField.getText();
+                PlaceOrderRequest request = PlaceOrderRequest.newBuilder()
+                        .setSeatId(seatId)
+                        .addOrder(Item.newBuilder().setItemName(order).setQuantity(1).build())
+                        .build();
+                PlaceOrderResponse response = foodAndDrinksBlockingStub.placeOrder(request);
+                foodAndDrinksResponseArea.setText(response.getMessage());
             }
         });
-        add(streamButton);
 
-        responseArea = new JTextArea();
-        responseArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(responseArea);
-        contentPane.add(scrollPane);
-        contentPane.add(new JLabel(""));
+        tabbedPane.addTab("Book Ticket", bookingPanel);
+        tabbedPane.addTab("Check Cinema", cinemaPanel);
+        tabbedPane.addTab("Food and Drinks", foodAndDrinksPanel);
 
-        // Initialize gRPC channel and stubs
-        channel = ManagedChannelBuilder.forAddress("localhost", 50052)
-                .usePlaintext()
-                .build();
-        blockingStub = CinemaServiceGrpc.newBlockingStub(channel);
-        asyncStub = CinemaServiceGrpc.newStub(channel);
+        add(tabbedPane);
+
+        setVisible(true);
     }
 
-    private void scheduleMovie() {
-        String movieName = movieNameField.getText();
-        String startTime = startTimeField.getText();
-        int duration = Integer.parseInt(durationField.getText());
-
-        ScheduleRequest request = ScheduleRequest.newBuilder()
-                .setMoviename(movieName)
-                .setStartingtime(startTime)
-                .setDurationtime(duration)
-                .build();
-        ScheduleResponse response = blockingStub.scheduleMovie(request);
-        responseArea.append("ScheduleMovie Response: " + response.getMessage() + "\n");
-    }
-
-    private void updateSchedule() {
-        String scheduleId = scheduleIdField.getText();
-        String updateTime = updateTimeField.getText();
-
-        UpdateScheduleRequest request = UpdateScheduleRequest.newBuilder()
-                .setScheduleId(scheduleId)
-                .setUpdatetime(updateTime)
-                .build();
-        UpdateScheduleResponse response = blockingStub.updateSchedule(request);
-        responseArea.append("UpdateSchedule Response: " + response.getMessage() + "\n");
-    }
-
-    private void streamCinemaStatus() {
-        String cinemaId = cinemaIdField.getText();
-
-        CinemaStatusRequest request = CinemaStatusRequest.newBuilder()
-                .setCinemaId(cinemaId)
-                .build();
-        asyncStub.streamCinemaStatus(request, new StreamObserver<CinemaStatus>() {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void onNext(CinemaStatus cinemaStatus) {
-                responseArea.append("CinemaStatus: " + cinemaStatus.getMoviename() +
-                        ", Status: " + cinemaStatus.getStatus() +
-                        ", Climate: " + cinemaStatus.getClimate() +
-                        ", Occupancy: " + cinemaStatus.getOccupancy() + "\n");
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                responseArea.append("Error: " + t.getMessage() + "\n");
-            }
-
-            @Override
-            public void onCompleted() {
-                responseArea.append("Completed receiving cinema status updates\n");
+            public void run() {
+                new CinemaServiceGUI();
             }
         });
     }
 }
-
-
 
