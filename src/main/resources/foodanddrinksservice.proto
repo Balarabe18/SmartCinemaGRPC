@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_package = "foodanddrinksservice";
+option java_outer_classname = "FoodAndDrinksServiceProto";
+
+service FoodAndDrinksService {
+    rpc PlaceOrder (PlaceOrderRequest) returns (PlaceOrderResponse);
+    rpc CheckOrderStatus (CheckOrderStatusRequest) returns (CheckOrderStatusResponse);
+    rpc StreamOrderUpdates (OrderUpdatesRequest) returns (stream OrderUpdate);
+}
+
+message Item {
+    string itemName = 1;
+    int32 quantity = 2;
+}
+
+message PlaceOrderRequest {
+    string seatId = 1;
+    repeated Item order = 2;
+}
+
+message PlaceOrderResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message CheckOrderStatusRequest {
+    string orderId = 1;
+}
+
+message CheckOrderStatusResponse {
+    string status = 1;
+}
+
+message OrderUpdatesRequest {
+    string customerId = 1;
+}
+
+message OrderUpdate {
+    string orderId = 1;
+    string status = 2;
+    string message = 3;
+}

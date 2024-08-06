@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_package = "cinemaservice";
+option java_outer_classname = "CinemaServiceProto";
+
+service CinemaService {
+    rpc ScheduleMovie (ScheduleRequest) returns (ScheduleResponse);
+    rpc UpdateSchedule (UpdateScheduleRequest) returns (UpdateScheduleResponse);
+    rpc StreamCinemaStatus (CinemaStatusRequest) returns (stream CinemaStatus);
+}
+
+message ScheduleRequest {
+    string moviename = 1;
+    string startingtime = 2;
+    int32 durationtime = 3;
+}
+
+message ScheduleResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message UpdateScheduleRequest {
+    string scheduleId = 1;
+    string updatetime = 2;
+}
+
+message UpdateScheduleResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message CinemaStatusRequest {
+    string cinemaId = 1;
+}
+
+message CinemaStatus {
+    string moviename = 1;
+    string status = 2;
+    string climate = 3;
+    int32 occupancy = 4;
+}

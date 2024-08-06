@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_package = "bookingticket";
+option java_outer_classname = "BookingTicketProto";
+
+service MovieBookingService {
+    rpc BookingTicket (BookingRequest) returns (BookingResponse);
+    rpc CancelTicket (CancelRequest) returns (CancelResponse);
+    rpc StreamBookingUpdates (BookingUpdatesRequest) returns (stream BookingUpdate);
+}
+
+message BookingRequest {
+    string moviename = 1;
+    int32 seatnumber = 2;
+    string starttime = 3;
+}
+
+message BookingResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message CancelRequest {
+    string bookingid = 1;
+}
+
+message CancelResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message BookingUpdatesRequest {
+    string userid = 1;
+}
+
+message BookingUpdate {
+    string bookingid = 1;
+    string status = 2;
+    string message = 3;
+}
+
