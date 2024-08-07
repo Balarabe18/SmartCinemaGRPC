@@ -72,14 +72,19 @@ public class CinemaServiceGUI extends JFrame {
         bookTicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String seatId = seatIdField.getText();
-                String movieId = movieIdField.getText();
-                BookingTicketProto.BookingRequest request = BookingTicketProto.BookingRequest.newBuilder()
-                        .setSeatId(seatId)
-                        .setMovieId(movieId)
-                        .build();
-                BookingTicketProto.BookingResponse response = bookingBlockingStub.bookingTicket(request);
-                bookingResponseArea.setText(response.getMessage());
+                try {
+                    int seatId = Integer.parseInt(seatIdField.getText()); // Convert String to int
+                    String movieName = movieIdField.getText();
+                    BookingTicketProto.BookingRequest request = BookingTicketProto.BookingRequest.newBuilder()
+                            .setSeatId(seatId) // Use the int value here
+                            .setMoviename(movieName) // Ensure the field name matches with the proto file
+                            .build();
+                    BookingTicketProto.BookingResponse response = bookingBlockingStub.bookingTicket(request);
+                    bookingResponseArea.setText(response.getMessage());
+                } catch (NumberFormatException ex) {
+                    // Handle the case where seatId is not a valid integer
+                    bookingResponseArea.setText("Invalid seat ID. Please enter a valid number.");
+                }
             }
         });
 
@@ -98,19 +103,30 @@ public class CinemaServiceGUI extends JFrame {
         cinemaPanel.add(new JScrollPane(cinemaResponseArea));
 
         checkCinemaButton.addActionListener(new ActionListener() {
+        	private JLabel movieNameField;
+            private JLabel startingTimeField;
+            private JLabel durationTimeField;
             @Override
             public void actionPerformed(ActionEvent e) {
-                String customerId = customerIdField.getText();
-                String ticketId = ticketIdField.getText();
-                CinemaServiceProto.CheckCinemaRequest request = CinemaServiceProto.CheckCinemaRequest.newBuilder()
-                        .setCustomerId(customerId)
-                        .setTicketId(ticketId)
+                String moviename = movieNameField.getText();
+                String startingtime = startingTimeField.getText();
+                int durationtime;
+                try {
+                    durationtime = Integer.parseInt(durationTimeField.getText());
+                } catch (NumberFormatException ex) {
+                    cinemaResponseArea.setText("Invalid duration time. Please enter a valid number.");
+                    return;
+                }
+
+                CinemaServiceProto.ScheduleRequest request = CinemaServiceProto.ScheduleRequest.newBuilder()
+                        .setMoviename(moviename)
+                        .setStartingtime(startingtime)
+                        .setDurationtime(durationtime)
                         .build();
-                CinemaServiceProto.CheckCinemaResponse response = cinemaBlockingStub.checkCinema(request);
+                CinemaServiceProto.ScheduleResponse response = cinemaBlockingStub.scheduleMovie(request);
                 cinemaResponseArea.setText(response.getMessage());
             }
         });
-
         // Food and Drinks Service Tab
         JPanel foodAndDrinksPanel = new JPanel();
         foodAndDrinksPanel.setLayout(new GridLayout(3, 2));

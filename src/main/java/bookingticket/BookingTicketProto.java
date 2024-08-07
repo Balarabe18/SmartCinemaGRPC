@@ -29,9 +29,9 @@ public final class BookingTicketProto {
         getMovienameBytes();
 
     /**
-     * <code>int32 seatnumber = 2;</code>
+     * <code>int32 seatId = 2;</code>
      */
-    int getSeatnumber();
+    int getSeatId();
 
     /**
      * <code>string starttime = 3;</code>
@@ -57,7 +57,7 @@ public final class BookingTicketProto {
     }
     private BookingRequest() {
       moviename_ = "";
-      seatnumber_ = 0;
+      seatId_ = 0;
       starttime_ = "";
     }
 
@@ -93,7 +93,7 @@ public final class BookingTicketProto {
             }
             case 16: {
 
-              seatnumber_ = input.readInt32();
+              seatId_ = input.readInt32();
               break;
             }
             case 26: {
@@ -168,13 +168,13 @@ public final class BookingTicketProto {
       }
     }
 
-    public static final int SEATNUMBER_FIELD_NUMBER = 2;
-    private int seatnumber_;
+    public static final int SEATID_FIELD_NUMBER = 2;
+    private int seatId_;
     /**
-     * <code>int32 seatnumber = 2;</code>
+     * <code>int32 seatId = 2;</code>
      */
-    public int getSeatnumber() {
-      return seatnumber_;
+    public int getSeatId() {
+      return seatId_;
     }
 
     public static final int STARTTIME_FIELD_NUMBER = 3;
@@ -228,8 +228,8 @@ public final class BookingTicketProto {
       if (!getMovienameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, moviename_);
       }
-      if (seatnumber_ != 0) {
-        output.writeInt32(2, seatnumber_);
+      if (seatId_ != 0) {
+        output.writeInt32(2, seatId_);
       }
       if (!getStarttimeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, starttime_);
@@ -246,9 +246,9 @@ public final class BookingTicketProto {
       if (!getMovienameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, moviename_);
       }
-      if (seatnumber_ != 0) {
+      if (seatId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, seatnumber_);
+          .computeInt32Size(2, seatId_);
       }
       if (!getStarttimeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, starttime_);
@@ -271,8 +271,8 @@ public final class BookingTicketProto {
       boolean result = true;
       result = result && getMoviename()
           .equals(other.getMoviename());
-      result = result && (getSeatnumber()
-          == other.getSeatnumber());
+      result = result && (getSeatId()
+          == other.getSeatId());
       result = result && getStarttime()
           .equals(other.getStarttime());
       result = result && unknownFields.equals(other.unknownFields);
@@ -288,8 +288,8 @@ public final class BookingTicketProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MOVIENAME_FIELD_NUMBER;
       hash = (53 * hash) + getMoviename().hashCode();
-      hash = (37 * hash) + SEATNUMBER_FIELD_NUMBER;
-      hash = (53 * hash) + getSeatnumber();
+      hash = (37 * hash) + SEATID_FIELD_NUMBER;
+      hash = (53 * hash) + getSeatId();
       hash = (37 * hash) + STARTTIME_FIELD_NUMBER;
       hash = (53 * hash) + getStarttime().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -427,7 +427,7 @@ public final class BookingTicketProto {
         super.clear();
         moviename_ = "";
 
-        seatnumber_ = 0;
+        seatId_ = 0;
 
         starttime_ = "";
 
@@ -458,7 +458,7 @@ public final class BookingTicketProto {
       public bookingticket.BookingTicketProto.BookingRequest buildPartial() {
         bookingticket.BookingTicketProto.BookingRequest result = new bookingticket.BookingTicketProto.BookingRequest(this);
         result.moviename_ = moviename_;
-        result.seatnumber_ = seatnumber_;
+        result.seatId_ = seatId_;
         result.starttime_ = starttime_;
         onBuilt();
         return result;
@@ -512,8 +512,8 @@ public final class BookingTicketProto {
           moviename_ = other.moviename_;
           onChanged();
         }
-        if (other.getSeatnumber() != 0) {
-          setSeatnumber(other.getSeatnumber());
+        if (other.getSeatId() != 0) {
+          setSeatId(other.getSeatId());
         }
         if (!other.getStarttime().isEmpty()) {
           starttime_ = other.starttime_;
@@ -617,28 +617,28 @@ public final class BookingTicketProto {
         return this;
       }
 
-      private int seatnumber_ ;
+      private int seatId_ ;
       /**
-       * <code>int32 seatnumber = 2;</code>
+       * <code>int32 seatId = 2;</code>
        */
-      public int getSeatnumber() {
-        return seatnumber_;
+      public int getSeatId() {
+        return seatId_;
       }
       /**
-       * <code>int32 seatnumber = 2;</code>
+       * <code>int32 seatId = 2;</code>
        */
-      public Builder setSeatnumber(int value) {
+      public Builder setSeatId(int value) {
         
-        seatnumber_ = value;
+        seatId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 seatnumber = 2;</code>
+       * <code>int32 seatId = 2;</code>
        */
-      public Builder clearSeatnumber() {
+      public Builder clearSeatId() {
         
-        seatnumber_ = 0;
+        seatId_ = 0;
         onChanged();
         return this;
       }
@@ -3955,21 +3955,21 @@ public final class BookingTicketProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023bookingticket.proto\"J\n\016BookingRequest\022" +
-      "\021\n\tmoviename\030\001 \001(\t\022\022\n\nseatnumber\030\002 \001(\005\022\021" +
-      "\n\tstarttime\030\003 \001(\t\"3\n\017BookingResponse\022\017\n\007" +
-      "success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\"\n\rCancel" +
-      "Request\022\021\n\tbookingid\030\001 \001(\t\"2\n\016CancelResp" +
-      "onse\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\'" +
-      "\n\025BookingUpdatesRequest\022\016\n\006userid\030\001 \001(\t\"" +
-      "C\n\rBookingUpdate\022\021\n\tbookingid\030\001 \001(\t\022\016\n\006s" +
-      "tatus\030\002 \001(\t\022\017\n\007message\030\003 \001(\t2\274\001\n\023MovieBo" +
-      "okingService\0222\n\rBookingTicket\022\017.BookingR" +
-      "equest\032\020.BookingResponse\022/\n\014CancelTicket" +
-      "\022\016.CancelRequest\032\017.CancelResponse\022@\n\024Str" +
-      "eamBookingUpdates\022\026.BookingUpdatesReques" +
-      "t\032\016.BookingUpdate0\001B#\n\rbookingticketB\022Bo" +
-      "okingTicketProtob\006proto3"
+      "\n\023bookingticket.proto\"F\n\016BookingRequest\022" +
+      "\021\n\tmoviename\030\001 \001(\t\022\016\n\006seatId\030\002 \001(\005\022\021\n\tst" +
+      "arttime\030\003 \001(\t\"3\n\017BookingResponse\022\017\n\007succ" +
+      "ess\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\"\n\rCancelRequ" +
+      "est\022\021\n\tbookingid\030\001 \001(\t\"2\n\016CancelResponse" +
+      "\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\'\n\025Bo" +
+      "okingUpdatesRequest\022\016\n\006userid\030\001 \001(\t\"C\n\rB" +
+      "ookingUpdate\022\021\n\tbookingid\030\001 \001(\t\022\016\n\006statu" +
+      "s\030\002 \001(\t\022\017\n\007message\030\003 \001(\t2\274\001\n\023MovieBookin" +
+      "gService\0222\n\rBookingTicket\022\017.BookingReque" +
+      "st\032\020.BookingResponse\022/\n\014CancelTicket\022\016.C" +
+      "ancelRequest\032\017.CancelResponse\022@\n\024StreamB" +
+      "ookingUpdates\022\026.BookingUpdatesRequest\032\016." +
+      "BookingUpdate0\001B#\n\rbookingticketB\022Bookin" +
+      "gTicketProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3988,7 +3988,7 @@ public final class BookingTicketProto {
     internal_static_BookingRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_BookingRequest_descriptor,
-        new java.lang.String[] { "Moviename", "Seatnumber", "Starttime", });
+        new java.lang.String[] { "Moviename", "SeatId", "Starttime", });
     internal_static_BookingResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_BookingResponse_fieldAccessorTable = new

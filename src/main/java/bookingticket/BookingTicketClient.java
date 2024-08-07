@@ -24,7 +24,7 @@ public class BookingTicketClient {
         // Book a ticket
         BookingRequest bookingRequest = BookingRequest.newBuilder()
                 .setMoviename("Inception")
-                .setSeatnumber(2)
+                .setSeatId(2)
                 .setStarttime("2024-08-10T19:30:00")
                 .build();
         BookingResponse bookingResponse = blockingStub.bookingTicket(bookingRequest);
