@@ -18,11 +18,11 @@ public class BookingTicketServer {
     private static Map<String, String> bookingDatabase = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
-        Server server = ServerBuilder.forPort(50052)
+        Server server = ServerBuilder.forPort(50051)
                 .addService(new MovieBookingServiceImpl())
                 .build()
                 .start();
-        System.out.println("Server started on port 50052");
+        System.out.println("Server started on port 50051");
         server.awaitTermination();
     }
 

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +30,7 @@ public class CinemaServiceGUI extends JFrame {
 
     private FoodAndDrinksServiceGrpc.FoodAndDrinksServiceBlockingStub foodAndDrinksBlockingStub;
     private FoodAndDrinksServiceGrpc.FoodAndDrinksServiceStub foodAndDrinksAsyncStub;
+    private JTextField textField;
 
     public CinemaServiceGUI() {
         initServices();
@@ -59,9 +62,11 @@ public class CinemaServiceGUI extends JFrame {
         JPanel bookingPanel = new JPanel();
         bookingPanel.setLayout(new GridLayout(3, 2));
         bookingPanel.add(new JLabel("Seat ID:"));
-        JTextField seatIdField = new JTextField();
-        bookingPanel.add(seatIdField);
-        bookingPanel.add(new JLabel("Movie ID:"));
+        
+        textField = new JTextField();
+        bookingPanel.add(textField);
+        textField.setColumns(10);
+        bookingPanel.add(new JLabel("Movie Name:"));
         JTextField movieIdField = new JTextField();
         bookingPanel.add(movieIdField);
         JButton bookTicketButton = new JButton("Book Ticket");
@@ -70,7 +75,9 @@ public class CinemaServiceGUI extends JFrame {
         bookingPanel.add(new JScrollPane(bookingResponseArea));
 
         bookTicketButton.addActionListener(new ActionListener() {
-            @Override
+            private JTextComponent seatIdField;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     int seatId = Integer.parseInt(seatIdField.getText()); // Convert String to int
@@ -91,21 +98,21 @@ public class CinemaServiceGUI extends JFrame {
         // Cinema Service Tab
         JPanel cinemaPanel = new JPanel();
         cinemaPanel.setLayout(new GridLayout(3, 2));
-        cinemaPanel.add(new JLabel("Customer ID:"));
-        JTextField customerIdField = new JTextField();
-        cinemaPanel.add(customerIdField);
-        cinemaPanel.add(new JLabel("Ticket ID:"));
-        JTextField ticketIdField = new JTextField();
-        cinemaPanel.add(ticketIdField);
+        cinemaPanel.add(new JLabel("Movie Name:"));
+        JTextField movieNameField = new JTextField();
+        cinemaPanel.add(movieNameField);
+        cinemaPanel.add(new JLabel("Starting Time:"));
+        JTextField startingTimeField = new JTextField();
+        cinemaPanel.add(startingTimeField);
+        cinemaPanel.add(new JLabel("Duration Time:"));
+        JTextField durationTimeField = new JTextField();
+        cinemaPanel.add(durationTimeField);
         JButton checkCinemaButton = new JButton("Check Cinema");
         cinemaPanel.add(checkCinemaButton);
         JTextArea cinemaResponseArea = new JTextArea();
         cinemaPanel.add(new JScrollPane(cinemaResponseArea));
 
         checkCinemaButton.addActionListener(new ActionListener() {
-        	private JLabel movieNameField;
-            private JLabel startingTimeField;
-            private JLabel durationTimeField;
             @Override
             public void actionPerformed(ActionEvent e) {
                 String moviename = movieNameField.getText();
@@ -127,6 +134,7 @@ public class CinemaServiceGUI extends JFrame {
                 cinemaResponseArea.setText(response.getMessage());
             }
         });
+
         // Food and Drinks Service Tab
         JPanel foodAndDrinksPanel = new JPanel();
         foodAndDrinksPanel.setLayout(new GridLayout(3, 2));
@@ -159,7 +167,7 @@ public class CinemaServiceGUI extends JFrame {
         tabbedPane.addTab("Check Cinema", cinemaPanel);
         tabbedPane.addTab("Food and Drinks", foodAndDrinksPanel);
 
-        add(tabbedPane);
+        getContentPane().add(tabbedPane);
 
         setVisible(true);
     }
@@ -173,4 +181,5 @@ public class CinemaServiceGUI extends JFrame {
         });
     }
 }
+
 
