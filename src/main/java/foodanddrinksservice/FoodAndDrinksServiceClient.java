@@ -7,7 +7,6 @@ import foodanddrinksservice.FoodAndDrinksServiceProto.PlaceOrderRequest;
 import foodanddrinksservice.FoodAndDrinksServiceProto.PlaceOrderResponse;
 import foodanddrinksservice.FoodAndDrinksServiceProto.CheckOrderStatusRequest;
 import foodanddrinksservice.FoodAndDrinksServiceProto.CheckOrderStatusResponse;
-import foodanddrinksservice.FoodAndDrinksServiceProto.Item;
 import foodanddrinksservice.FoodAndDrinksServiceProto.OrderUpdatesRequest;
 import foodanddrinksservice.FoodAndDrinksServiceProto.OrderUpdate;
 import foodanddrinksservice.FoodAndDrinksServiceGrpc;
@@ -32,8 +31,8 @@ public class FoodAndDrinksServiceClient {
             // Place an order
             PlaceOrderRequest placeOrderRequest = PlaceOrderRequest.newBuilder()
                     .setSeatId("A12")
-                    .addOrder(Item.newBuilder().setItemName("Popcorn").setQuantity(1).build())
-                    .addOrder(Item.newBuilder().setItemName("Drink").setQuantity(2).build())
+                    .addOrder(foodanddrinksservice.FoodAndDrinksServiceProto.Item.newBuilder().setItemName("Popcorn").setQuantity(1).build())
+                    .addOrder(foodanddrinksservice.FoodAndDrinksServiceProto.Item.newBuilder().setItemName("Drink").setQuantity(2).build())
                     .build();
             PlaceOrderResponse placeOrderResponse = blockingStub.placeOrder(placeOrderRequest);
             System.out.println("PlaceOrder Response: " + placeOrderResponse.getMessage());

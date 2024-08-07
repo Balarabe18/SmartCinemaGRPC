@@ -17,7 +17,6 @@ import java.util.Map;
 public class FoodAndDrinksServiceServer {
 
     private static Map<String, String> orderDatabase = new HashMap<>();
-    private static Map<String, OrderUpdate> orderUpdatesDatabase = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         Server server = ServerBuilder.forPort(50053)
@@ -60,20 +59,28 @@ public class FoodAndDrinksServiceServer {
         @Override
         public void streamOrderUpdates(OrderUpdatesRequest request,
                                        StreamObserver<OrderUpdate> responseObserver) {
-            // Simulate sending updates
-            for (int i = 0; i < 5; i++) {
-                OrderUpdate update = OrderUpdate.newBuilder()
-                        .setOrderId("ORDER_" + i)
-                        .setStatus("PREPARING")
-                        .setMessage("Order is being prepared")
+            String orderId = "ORDER_" + System.currentTimeMillis(); // Simulate a real order ID
+            String[] updates = {
+                "Order has been accepted",
+                "Order is being prepared",
+                "Order has been sent",
+                "Order has arrived"
+            };
+
+            for (String update : updates) {
+                OrderUpdate orderUpdate = OrderUpdate.newBuilder()
+                        .setOrderId(orderId)
+                        .setStatus(update)
+                        .setMessage(update)
                         .build();
-                responseObserver.onNext(update);
+                responseObserver.onNext(orderUpdate);
                 try {
-                    Thread.sleep(1000); // Simulate delay
+                    Thread.sleep(1000); // Simulate delay between updates
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+
             responseObserver.onCompleted();
         }
     }
