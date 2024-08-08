@@ -1,6 +1,5 @@
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/foodanddrinksservice/FoodAndDrinksServiceServer.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/cinemaservice/CinemaServiceClient.java
-/Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/SmartCinemaApp.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/cinemaservice/CinemaServiceServer.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/foodanddrinksservice/FoodAndDrinksServiceClient.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/foodanddrinksservice/FoodAndDrinksServiceProto.java
@@ -9,6 +8,7 @@
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/bookingticket/BookingTicketClient.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/bookingticket/BookingTicketProto.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/bookingticket/MovieBookingServiceGrpc.java
+/Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/jmDNS/CinemaServiceRegistration.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/foodanddrinksservice/FoodAndDrinksServiceGrpc.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/bookingticket/BookingTicketServer.java
 /Users/chrisoghumah/eclipse-workspace/SmartCinemaGRPC/src/main/java/cinemaservice/CinemaServiceGrpc.java

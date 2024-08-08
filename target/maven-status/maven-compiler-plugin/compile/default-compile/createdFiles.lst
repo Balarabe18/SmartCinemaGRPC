@@ -1,7 +1,6 @@
 cinemaservice/CinemaServiceProto$ScheduleResponse$1.class
 cinemaservice/CinemaServiceProto$CinemaStatusOrBuilder.class
 foodanddrinksservice/FoodAndDrinksServiceServer.class
-CinemaServiceGUI$2.class
 foodanddrinksservice/FoodAndDrinksServiceGrpc$FoodAndDrinksServiceStub.class
 cinemaservice/CinemaServiceGrpc$CinemaServiceStub.class
 bookingticket/BookingTicketServer$MovieBookingServiceImpl.class
@@ -48,18 +47,15 @@ bookingticket/BookingTicketProto$CancelRequestOrBuilder.class
 foodanddrinksservice/FoodAndDrinksServiceGrpc$FoodAndDrinksServiceImplBase.class
 cinemaservice/CinemaServiceProto.class
 cinemaservice/CinemaServiceProto$CinemaStatus$1.class
-CinemaServiceGUI$1.class
 foodanddrinksservice/FoodAndDrinksServiceProto$OrderUpdatesRequest$Builder.class
 foodanddrinksservice/FoodAndDrinksServiceProto$OrderUpdate$1.class
 cinemaservice/CinemaServiceProto$CinemaStatusRequest$1.class
-SmartCinemaApp.class
 cinemaservice/CinemaServiceProto$UpdateScheduleRequest$Builder.class
 foodanddrinksservice/FoodAndDrinksServiceProto$OrderUpdatesRequest$1.class
 foodanddrinksservice/FoodAndDrinksServiceProto$PlaceOrderResponse$1.class
 cinemaservice/CinemaServiceProto$UpdateScheduleResponseOrBuilder.class
 cinemaservice/CinemaServiceProto$CinemaStatusRequest$Builder.class
 bookingticket/BookingTicketProto$BookingResponse.class
-SmartCinemaApp$1.class
 bookingticket/MovieBookingServiceGrpc$MovieBookingServiceFileDescriptorSupplier.class
 cinemaservice/CinemaServiceProto$UpdateScheduleResponse.class
 cinemaservice/CinemaServiceProto$UpdateScheduleRequest$1.class
@@ -97,7 +93,6 @@ cinemaservice/CinemaServiceClient$1.class
 foodanddrinksservice/FoodAndDrinksServiceProto$CheckOrderStatusRequest$1.class
 foodanddrinksservice/FoodAndDrinksServiceGrpc$FoodAndDrinksServiceFileDescriptorSupplier.class
 foodanddrinksservice/FoodAndDrinksServiceProto$PlaceOrderRequest.class
-CinemaServiceGUI$3.class
 foodanddrinksservice/FoodAndDrinksServiceProto$CheckOrderStatusResponse.class
 bookingticket/BookingTicketProto$BookingRequest$Builder.class
 bookingticket/MovieBookingServiceGrpc$MovieBookingServiceBlockingStub.class
@@ -113,7 +108,6 @@ cinemaservice/CinemaServiceProto$CinemaStatus$Builder.class
 CinemaServiceGUI.class
 cinemaservice/CinemaServiceProto$CinemaStatus.class
 bookingticket/BookingTicketProto$1.class
-CinemaServiceGUI$4.class
 foodanddrinksservice/FoodAndDrinksServiceGrpc$MethodHandlers.class
 foodanddrinksservice/FoodAndDrinksServiceGrpc$FoodAndDrinksServiceBlockingStub.class
 bookingticket/BookingTicketProto$BookingUpdatesRequest.class
@@ -125,6 +119,7 @@ cinemaservice/CinemaServiceProto$UpdateScheduleResponse$1.class
 cinemaservice/CinemaServiceProto$1.class
 bookingticket/BookingTicketProto$BookingResponse$Builder.class
 bookingticket/MovieBookingServiceGrpc$MovieBookingServiceFutureStub.class
+jmDNS/CinemaServiceRegistration.class
 foodanddrinksservice/FoodAndDrinksServiceProto$OrderUpdate.class
 foodanddrinksservice/FoodAndDrinksServiceProto$Item$Builder.class
 cinemaservice/CinemaServiceClient.class
