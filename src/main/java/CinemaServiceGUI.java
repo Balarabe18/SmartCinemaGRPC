@@ -28,6 +28,9 @@ public class CinemaServiceGUI implements ActionListener {
         SwingUtilities.invokeLater(CinemaServiceGUI::new);
     }
 
+    /**
+     * @wbp.parser.entryPoint
+     */
     public CinemaServiceGUI() {
         initServices();
         build();
@@ -57,7 +60,7 @@ public class CinemaServiceGUI implements ActionListener {
         panel.add(createFoodAndDrinksPanel());
 
         frame.setSize(800, 600);
-        frame.add(panel);
+        frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);
     }
