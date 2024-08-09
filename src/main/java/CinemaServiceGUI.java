@@ -38,6 +38,9 @@ public class CinemaServiceGUI implements ActionListener {
     }
 
     // Constructor: Initializes services and sets up GUI
+    /**
+     * @wbp.parser.entryPoint
+     */
     public CinemaServiceGUI() {
         initServices();
         build();
@@ -57,8 +60,9 @@ public class CinemaServiceGUI implements ActionListener {
 
     // Sets up the GUI components and layout
     private void build() {
-        JFrame frame = new JFrame("Cinema Service GUI");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frmSmartcinemaapp = new JFrame("Cinema Service GUI");
+        frmSmartcinemaapp.setTitle("SmartCinemaApp");
+        frmSmartcinemaapp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -68,10 +72,10 @@ public class CinemaServiceGUI implements ActionListener {
         panel.add(createCinemaPanel());
         panel.add(createFoodAndDrinksPanel());
 
-        frame.setSize(800, 600);
-        frame.getContentPane().add(panel);
-        frame.pack();
-        frame.setVisible(true);
+        frmSmartcinemaapp.setSize(800, 600);
+        frmSmartcinemaapp.getContentPane().add(panel);
+        frmSmartcinemaapp.pack();
+        frmSmartcinemaapp.setVisible(true);
     }
 
     // Creates and returns the panel for booking operations
