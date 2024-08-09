@@ -1391,6 +1391,11 @@ public final class BookingTicketProto {
      */
     com.google.protobuf.ByteString
         getBookingidBytes();
+
+    /**
+     * <code>int32 seatId = 2;</code>
+     */
+    int getSeatId();
   }
   /**
    * Protobuf type {@code CancelRequest}
@@ -1406,6 +1411,7 @@ public final class BookingTicketProto {
     }
     private CancelRequest() {
       bookingid_ = "";
+      seatId_ = 0;
     }
 
     @java.lang.Override
@@ -1436,6 +1442,11 @@ public final class BookingTicketProto {
               java.lang.String s = input.readStringRequireUtf8();
 
               bookingid_ = s;
+              break;
+            }
+            case 16: {
+
+              seatId_ = input.readInt32();
               break;
             }
             default: {
@@ -1504,6 +1515,15 @@ public final class BookingTicketProto {
       }
     }
 
+    public static final int SEATID_FIELD_NUMBER = 2;
+    private int seatId_;
+    /**
+     * <code>int32 seatId = 2;</code>
+     */
+    public int getSeatId() {
+      return seatId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1521,6 +1541,9 @@ public final class BookingTicketProto {
       if (!getBookingidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, bookingid_);
       }
+      if (seatId_ != 0) {
+        output.writeInt32(2, seatId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1532,6 +1555,10 @@ public final class BookingTicketProto {
       size = 0;
       if (!getBookingidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, bookingid_);
+      }
+      if (seatId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, seatId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1551,6 +1578,8 @@ public final class BookingTicketProto {
       boolean result = true;
       result = result && getBookingid()
           .equals(other.getBookingid());
+      result = result && (getSeatId()
+          == other.getSeatId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1564,6 +1593,8 @@ public final class BookingTicketProto {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + BOOKINGID_FIELD_NUMBER;
       hash = (53 * hash) + getBookingid().hashCode();
+      hash = (37 * hash) + SEATID_FIELD_NUMBER;
+      hash = (53 * hash) + getSeatId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1699,6 +1730,8 @@ public final class BookingTicketProto {
         super.clear();
         bookingid_ = "";
 
+        seatId_ = 0;
+
         return this;
       }
 
@@ -1726,6 +1759,7 @@ public final class BookingTicketProto {
       public bookingticket.BookingTicketProto.CancelRequest buildPartial() {
         bookingticket.BookingTicketProto.CancelRequest result = new bookingticket.BookingTicketProto.CancelRequest(this);
         result.bookingid_ = bookingid_;
+        result.seatId_ = seatId_;
         onBuilt();
         return result;
       }
@@ -1777,6 +1811,9 @@ public final class BookingTicketProto {
         if (!other.getBookingid().isEmpty()) {
           bookingid_ = other.bookingid_;
           onChanged();
+        }
+        if (other.getSeatId() != 0) {
+          setSeatId(other.getSeatId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1872,6 +1909,32 @@ public final class BookingTicketProto {
   checkByteStringIsUtf8(value);
         
         bookingid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int seatId_ ;
+      /**
+       * <code>int32 seatId = 2;</code>
+       */
+      public int getSeatId() {
+        return seatId_;
+      }
+      /**
+       * <code>int32 seatId = 2;</code>
+       */
+      public Builder setSeatId(int value) {
+        
+        seatId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 seatId = 2;</code>
+       */
+      public Builder clearSeatId() {
+        
+        seatId_ = 0;
         onChanged();
         return this;
       }
@@ -3958,18 +4021,18 @@ public final class BookingTicketProto {
       "\n\023bookingticket.proto\"F\n\016BookingRequest\022" +
       "\021\n\tmoviename\030\001 \001(\t\022\016\n\006seatId\030\002 \001(\005\022\021\n\tst" +
       "arttime\030\003 \001(\t\"3\n\017BookingResponse\022\017\n\007succ" +
-      "ess\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\"\n\rCancelRequ" +
-      "est\022\021\n\tbookingid\030\001 \001(\t\"2\n\016CancelResponse" +
-      "\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"\'\n\025Bo" +
-      "okingUpdatesRequest\022\016\n\006userid\030\001 \001(\t\"C\n\rB" +
-      "ookingUpdate\022\021\n\tbookingid\030\001 \001(\t\022\016\n\006statu" +
-      "s\030\002 \001(\t\022\017\n\007message\030\003 \001(\t2\274\001\n\023MovieBookin" +
-      "gService\0222\n\rBookingTicket\022\017.BookingReque" +
-      "st\032\020.BookingResponse\022/\n\014CancelTicket\022\016.C" +
-      "ancelRequest\032\017.CancelResponse\022@\n\024StreamB" +
-      "ookingUpdates\022\026.BookingUpdatesRequest\032\016." +
-      "BookingUpdate0\001B#\n\rbookingticketB\022Bookin" +
-      "gTicketProtob\006proto3"
+      "ess\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"2\n\rCancelRequ" +
+      "est\022\021\n\tbookingid\030\001 \001(\t\022\016\n\006seatId\030\002 \001(\005\"2" +
+      "\n\016CancelResponse\022\017\n\007success\030\001 \001(\010\022\017\n\007mes" +
+      "sage\030\002 \001(\t\"\'\n\025BookingUpdatesRequest\022\016\n\006u" +
+      "serid\030\001 \001(\t\"C\n\rBookingUpdate\022\021\n\tbookingi" +
+      "d\030\001 \001(\t\022\016\n\006status\030\002 \001(\t\022\017\n\007message\030\003 \001(\t" +
+      "2\274\001\n\023MovieBookingService\0222\n\rBookingTicke" +
+      "t\022\017.BookingRequest\032\020.BookingResponse\022/\n\014" +
+      "CancelTicket\022\016.CancelRequest\032\017.CancelRes" +
+      "ponse\022@\n\024StreamBookingUpdates\022\026.BookingU" +
+      "pdatesRequest\032\016.BookingUpdate0\001B#\n\rbooki" +
+      "ngticketB\022BookingTicketProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4000,7 +4063,7 @@ public final class BookingTicketProto {
     internal_static_CancelRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CancelRequest_descriptor,
-        new java.lang.String[] { "Bookingid", });
+        new java.lang.String[] { "Bookingid", "SeatId", });
     internal_static_CancelResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_CancelResponse_fieldAccessorTable = new

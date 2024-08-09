@@ -1,41 +1,70 @@
+// Use proto3 syntax for defining the Protocol Buffers schema
 syntax = "proto3";
 
+// Specify the Java package for generated classes
 option java_package = "bookingticket";
+// Specify the name of the outer class generated in Java
 option java_outer_classname = "BookingTicketProto";
 
+// Define the service with RPC methods for the movie booking system
 service MovieBookingService {
+    // RPC method for booking a ticket
     rpc BookingTicket (BookingRequest) returns (BookingResponse);
+
+    // RPC method for canceling a booked ticket
     rpc CancelTicket (CancelRequest) returns (CancelResponse);
+
+    // RPC method for streaming booking updates
     rpc StreamBookingUpdates (BookingUpdatesRequest) returns (stream BookingUpdate);
 }
 
+// Message definition for booking a ticket
 message BookingRequest {
+    // Name of the movie for which the ticket is booked
     string moviename = 1;
+    // ID of the seat being booked
     int32 seatId = 2;
+    // Start time of the movie
     string starttime = 3;
 }
 
+// Message definition for the response of a booking request
 message BookingResponse {
+    // Indicates whether the booking was successful
     bool success = 1;
+    // Message providing details about the booking response
     string message = 2;
 }
 
+// Message definition for canceling a ticket
 message CancelRequest {
+    // ID of the booking to be canceled
     string bookingid = 1;
+    // ID of the seat to be canceled
+    int32 seatId = 2;
 }
 
+// Message definition for the response of a cancel request
 message CancelResponse {
+    // Indicates whether the cancellation was successful
     bool success = 1;
+    // Message providing details about the cancellation response
     string message = 2;
 }
 
+// Message definition for requesting booking updates
 message BookingUpdatesRequest {
+    // User ID for which the booking updates are requested
     string userid = 1;
 }
 
+// Message definition for a booking update
 message BookingUpdate {
+    // ID of the booking being updated
     string bookingid = 1;
+    // Status of the booking
     string status = 2;
+    // Message providing details about the booking update
     string message = 3;
 }
 

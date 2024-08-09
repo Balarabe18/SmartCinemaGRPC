@@ -1,42 +1,71 @@
+// Use proto3 syntax for defining the Protocol Buffers schema
 syntax = "proto3";
 
+// Specify the Java package for generated classes
 option java_package = "cinemaservice";
+// Specify the name of the outer class generated in Java
 option java_outer_classname = "CinemaServiceProto";
 
+// Define the service with RPC methods for the cinema scheduling system
 service CinemaService {
+    // RPC method for scheduling a movie
     rpc ScheduleMovie (ScheduleRequest) returns (ScheduleResponse);
+
+    // RPC method for updating the movie schedule
     rpc UpdateSchedule (UpdateScheduleRequest) returns (UpdateScheduleResponse);
+
+    // RPC method for streaming cinema status updates
     rpc StreamCinemaStatus (CinemaStatusRequest) returns (stream CinemaStatus);
 }
 
+// Message definition for scheduling a movie
 message ScheduleRequest {
+    // Name of the movie to be scheduled
     string moviename = 1;
+    // Starting time of the movie
     string startingtime = 2;
+    // Duration of the movie in minutes
     int32 durationtime = 3;
 }
 
+// Message definition for the response of a schedule movie request
 message ScheduleResponse {
+    // Indicates whether the movie scheduling was successful
     bool success = 1;
+    // Message providing details about the schedule response
     string message = 2;
 }
 
+// Message definition for updating an existing movie schedule
 message UpdateScheduleRequest {
+    // ID of the schedule to be updated
     string scheduleId = 1;
+    // New update time for the schedule
     string updatetime = 2;
 }
 
+// Message definition for the response of an update schedule request
 message UpdateScheduleResponse {
+    // Indicates whether the schedule update was successful
     bool success = 1;
+    // Message providing details about the update response
     string message = 2;
 }
 
+// Message definition for requesting cinema status updates
 message CinemaStatusRequest {
+    // ID of the cinema for which the status is requested
     string cinemaId = 1;
 }
 
+// Message definition for a cinema status update
 message CinemaStatus {
+    // Name of the movie currently showing or scheduled
     string moviename = 1;
+    // Current status of the cinema (e.g., "Open", "Closed")
     string status = 2;
+    // Climate information of the cinema (e.g., "Air-conditioned", "Heated")
     string climate = 3;
+    // Occupancy level of the cinema (e.g., number of seats occupied)
     int32 occupancy = 4;
 }

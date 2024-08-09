@@ -1,43 +1,71 @@
+// Use proto3 syntax for defining the Protocol Buffers schema
 syntax = "proto3";
 
+// Specify the Java package for generated classes
 option java_package = "foodanddrinksservice";
+// Specify the name of the outer class generated in Java
 option java_outer_classname = "FoodAndDrinksServiceProto";
 
+// Define the service with RPC methods for the food and drinks ordering system
 service FoodAndDrinksService {
+    // RPC method for placing an order
     rpc PlaceOrder (PlaceOrderRequest) returns (PlaceOrderResponse);
+
+    // RPC method for checking the status of an order
     rpc CheckOrderStatus (CheckOrderStatusRequest) returns (CheckOrderStatusResponse);
+
+    // RPC method for streaming updates about orders
     rpc StreamOrderUpdates (OrderUpdatesRequest) returns (stream OrderUpdate);
 }
 
+// Message definition for an item in the order
 message Item {
+    // Name of the item being ordered
     string itemName = 1;
+    // Quantity of the item being ordered
     int32 quantity = 2;
 }
 
+// Message definition for placing an order
 message PlaceOrderRequest {
+    // Seat ID associated with the order
     string seatId = 1;
+    // List of items being ordered
     repeated Item order = 2;
 }
 
+// Message definition for the response of a place order request
 message PlaceOrderResponse {
+    // Indicates whether the order was successfully placed
     bool success = 1;
+    // Message providing details about the order response
     string message = 2;
 }
 
+// Message definition for checking the status of an order
 message CheckOrderStatusRequest {
+    // ID of the order whose status is being checked
     string orderId = 1;
 }
 
+// Message definition for the response of a check order status request
 message CheckOrderStatusResponse {
+    // Status of the requested order
     string status = 1;
 }
 
+// Message definition for requesting order updates
 message OrderUpdatesRequest {
+    // Customer ID for whom the order updates are requested
     string customerId = 1;
 }
 
+// Message definition for an order update
 message OrderUpdate {
+    // ID of the order being updated
     string orderId = 1;
+    // Updated status of the order
     string status = 2;
+    // Message providing details about the order update
     string message = 3;
 }
